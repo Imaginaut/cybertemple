@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="window">
+    <main class="window" id="windowRoot">
       <div class="titlebar">🜂 cybertemple://observatory-window — digital window into their dimension</div>
       <nav class="tabs" aria-label="Cybertemple tabs">
         <button class="tab-btn active" data-tab="dashboard-panel">Dashboard</button>
@@ -16,58 +16,110 @@
       </nav>
 
       <section id="dashboard-panel" class="panel active" aria-label="Cybertemple dashboard">
-        <div class="grid">
-          <article class="card span-3">
-            <h3>Portal Uptime</h3>
-            <div class="metric" id="uptime">00:00:00</div>
-            <div class="sub">Since ritual boot sequence</div>
-          </article>
-          <article class="card span-3">
-            <h3>Aether Throughput</h3>
-            <div class="metric" id="throughput">0.00 TU/s</div>
-            <div class="sub">Temple units per second</div>
-          </article>
-          <article class="card span-3">
-            <h3>Sigil Integrity</h3>
-            <div class="metric" id="integrity">100.00%</div>
-            <div class="sub">Rune lattice cohesion</div>
-          </article>
-          <article class="card span-3">
-            <h3>Realm Status</h3>
-            <div class="metric" id="realm">STABLE</div>
-            <div class="sub">Digital veil condition</div>
-          </article>
+        <div class="ops-shell">
+          <aside class="rail rail-left">
+            <article class="card">
+              <h3>Portal Uptime</h3>
+              <div class="metric" id="uptime">00:00:00</div>
+              <div class="sub">Current session dwell time</div>
+              <div class="sub" id="lifetime">Lifetime: 00:00:00</div>
+            </article>
+            <article class="card">
+              <h3>Aether Throughput</h3>
+              <div class="metric" id="throughput">0.00 TU/s</div>
+              <div class="sub">Temple units per second from interactions</div>
+            </article>
+            <article class="card">
+              <h3>Sigil Integrity</h3>
+              <div class="metric" id="integrity">100.00%</div>
+              <div class="sub">Narrative coherence and focus</div>
+            </article>
+            <article class="card">
+              <h3>Realm Status</h3>
+              <button id="realmCycle" class="metric metric-btn">ATTUNED</button>
+              <div class="sub">Choose lens: Scholar / Hacker / Pilgrim / Trickster</div>
+            </article>
+            <article class="card">
+              <h3>Host Glyphs</h3>
+              <div class="sub" id="host">Loading host runes…</div>
+              <div class="sub" id="ua" style="margin-top: 8px"></div>
+              <div class="sub" id="glyph" style="margin-top: 8px"></div>
+            </article>
+          </aside>
 
-          <article class="card span-8">
-            <h3>Subsystem Resonance</h3>
-            <div class="bar-wrap">
-              <div class="sub">Compiler Grove</div><div class="bar"><span id="bar1"></span></div>
-              <div class="sub">CI Altar</div><div class="bar"><span id="bar2"></span></div>
-              <div class="sub">Terminal Atrium</div><div class="bar"><span id="bar3"></span></div>
-              <div class="sub">Arcane Linter</div><div class="bar"><span id="bar4"></span></div>
-            </div>
-          </article>
+          <section class="focus-lane">
+            <article class="card focus-card">
+              <h3>Subsystem Resonance <span class="sub">(tap a bar to tune vocabulary)</span></h3>
+              <div class="bar-wrap">
+                <button class="bar-row" data-system="Compiler Grove"><div class="sub">Compiler Grove</div><div class="bar"><span id="bar1"></span></div></button>
+                <button class="bar-row" data-system="CI Altar"><div class="sub">CI Altar</div><div class="bar"><span id="bar2"></span></div></button>
+                <button class="bar-row" data-system="Terminal Atrium"><div class="sub">Terminal Atrium</div><div class="bar"><span id="bar3"></span></div></button>
+                <button class="bar-row" data-system="Arcane Linter"><div class="sub">Arcane Linter</div><div class="bar"><span id="bar4"></span></div></button>
+              </div>
+            </article>
 
-          <article class="card span-4">
-            <h3>Host Glyphs</h3>
-            <div class="sub" id="host">Loading host runes…</div>
-            <div class="sub" id="ua" style="margin-top:8px;"></div>
-          </article>
+            <article class="card focus-card">
+              <h3>Temple Event Stream</h3>
+              <div id="events" class="events"></div>
+            </article>
+          </section>
 
-          <article class="card span-12">
-            <h3>Temple Event Stream</h3>
-            <div id="events" class="events"></div>
-          </article>
+          <aside class="rail rail-right">
+            <article class="card">
+              <h3>Resonance Wheel</h3>
+              <div class="pie-grid">
+                <div class="pie-wrap">
+                  <div class="pie" id="pieStability"></div>
+                  <div class="sub">Stability</div>
+                </div>
+                <div class="pie-wrap">
+                  <div class="pie" id="pieAnomaly"></div>
+                  <div class="sub">Anomaly</div>
+                </div>
+                <div class="pie-wrap">
+                  <div class="pie" id="pieCommunity"></div>
+                  <div class="sub">Echo Flux</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3>Continuum Graph</h3>
+              <canvas id="continuumGraph" height="180"></canvas>
+            </article>
+
+            <article class="card">
+              <h3>Temple News Ticker</h3>
+              <div class="ticker-shell">
+                <div id="tickerTrack" class="ticker-track"></div>
+              </div>
+            </article>
+          </aside>
         </div>
       </section>
 
       <section id="matrix-panel" class="panel" aria-label="Matrix rainfall tab">
+        <div class="matrix-head">
+          <div class="sub">Click drops for fragments. Meteors unlock quest prompts.</div>
+          <button id="scanMeteor" class="tab-btn">Scan for meteor</button>
+        </div>
         <canvas id="matrix" width="1160" height="560"></canvas>
+        <aside id="matrixFragment" class="matrix-fragment">Awaiting divination input…</aside>
       </section>
 
-      <section id="ritual-panel" class="panel" aria-label="Ritual log tab"></section>
+      <section id="ritual-panel" class="panel" aria-label="Ritual log tab">
+        <div class="ritual-tools">
+          <textarea id="offeringText" maxlength="500" placeholder="Offer a fragment (private by default)."></textarea>
+          <div class="ritual-actions">
+            <label><input type="checkbox" id="shareEcho" /> Share as anonymous echo</label>
+            <button id="offerBtn" class="tab-btn">Offer Fragment</button>
+            <button id="exportBtn" class="tab-btn">Export Log</button>
+          </div>
+        </div>
+        <div id="ritualLog" class="ritual-log"></div>
+      </section>
 
-      <div class="footer">Standalone cybertemple program artifact. Open directly, or run the workflow to package under <code>public/</code>.</div>
+      <div class="footer">The temple persists locally, mutates on interaction, and drifts through monthly arcs.</div>
     </main>
 
     <script src="./app.js"></script>
