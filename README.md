@@ -49,3 +49,14 @@ The `003.yml` workflow remains manual-only and now packages this UI by copying `
 - Operate regional deployments for data residency and low-latency experiences.
 - Publish governance and trust framework for content provenance and model safety.
 - Build a partner program for agencies and studios authoring premium arcs.
+
+## Calming Product Roadmap
+
+See `CALMING_EXPERIENCE_ROADMAP.md` for a focused plan to evolve Cybertemple into a 20-minute calming daily ritual product.
+
+
+### V1 Implementation Docs
+
+- `V1_EXECUTION_CHECKLIST.md`
+- `V1_COPY_DECK.md`
+
