@@ -8,11 +8,17 @@
   </head>
   <body>
     <main class="window" id="windowRoot">
-      <div class="titlebar">🜂 cybertemple://observatory-window — digital window into their dimension</div>
+      <div class="titlebar">
+        🜂 cybertemple://observatory-window — digital window into their dimension
+        <span id="dailyLabel" class="daily-label" hidden></span>
+      </div>
+
       <nav class="tabs" aria-label="Cybertemple tabs">
         <button class="tab-btn active" data-tab="dashboard-panel">Dashboard</button>
         <button class="tab-btn" data-tab="matrix-panel">Matrix Rainfall</button>
         <button class="tab-btn" data-tab="ritual-panel">Ritual Log</button>
+        <button class="tab-btn" id="copyShareLink">Copy Share Link</button>
+        <button class="tab-btn" id="modeToggle">Mode: Normal</button>
       </nav>
 
       <section id="dashboard-panel" class="panel active" aria-label="Cybertemple dashboard">
@@ -94,6 +100,12 @@
                 <div id="tickerTrack" class="ticker-track"></div>
               </div>
             </article>
+
+            <article class="card" id="sigilCard">
+              <h3>Daily Sigil</h3>
+              <canvas id="sigilCanvas" width="240" height="240"></canvas>
+              <button id="exportSigilBtn" class="tab-btn">Export Sigil PNG</button>
+            </article>
           </aside>
         </div>
       </section>
@@ -108,6 +120,18 @@
       </section>
 
       <section id="ritual-panel" class="panel" aria-label="Ritual log tab">
+        <div class="controls-panel card">
+          <h3>Controls</h3>
+          <div class="controls-grid">
+            <button class="tab-btn" id="resetStateBtn">Reset</button>
+            <button class="tab-btn" id="exportStateBtn">Export</button>
+            <button class="tab-btn" id="importStateBtn">Import</button>
+            <button class="tab-btn" id="telemetryDumpBtn">Telemetry Dump</button>
+          </div>
+          <input id="importStateFile" type="file" accept="application/json" hidden />
+          <div id="controlsMessage" class="sub" aria-live="polite"></div>
+        </div>
+
         <div class="ritual-tools">
           <textarea id="offeringText" maxlength="500" placeholder="Offer a fragment (private by default)."></textarea>
           <div class="ritual-actions">
@@ -119,8 +143,20 @@
         <div id="ritualLog" class="ritual-log"></div>
       </section>
 
-      <div class="footer">The temple persists locally, mutates on interaction, and drifts through monthly arcs.</div>
+      <div class="footer" id="subtitleLine">The temple persists locally, mutates on interaction, and drifts through monthly arcs.</div>
     </main>
+
+    <div id="onboardingOverlay" class="onboarding-overlay" hidden>
+      <div class="onboarding-card card">
+        <h2>Enter the temple</h2>
+        <p>A quiet observatory for short, intentional rituals.</p>
+        <p>Settle your pace, leave one small intention, and continue when ready.</p>
+        <div class="onboarding-actions">
+          <button id="onboardingDailyBtn" class="tab-btn">Daily Ritual</button>
+          <button id="onboardingEnterBtn" class="tab-btn">Enter</button>
+        </div>
+      </div>
+    </div>
 
     <script src="./app.js"></script>
   </body>
